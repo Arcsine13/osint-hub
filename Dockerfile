@@ -1,13 +1,18 @@
+FROM python:3.11-slim AS python-builder
+
+# Install sherlock in a virtual env
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --no-cache-dir sherlock-project
+
 FROM node:18-slim
 
-# Install Python and pip
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    && rm -rf /var/lib/apt/lists/*
+# Copy Python venv from builder
+COPY --from=python-builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Install Sherlock
-RUN pip3 install sherlock-project
+# Verify sherlock works
+RUN sherlock --version
 
 # Set working directory
 WORKDIR /app
