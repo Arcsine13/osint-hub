@@ -5,21 +5,21 @@
 | Service | URL | Status |
 |---------|-----|--------|
 | **Frontend** | https://osint-hub-ten.vercel.app | ✅ Live |
-| **Backend** | https://sherlock-osint-backend.onrender.com | ✅ Live |
+| **Backend** | https://osint-hub-n8vd.onrender.com | ✅ Live |
 | **GitHub** | https://github.com/Arcsine13/osint-hub | ✅ Live |
 
 ## Deployment Date
 
 June 14, 2026
 
-## Tech Stack
+## Architecture
 
-- **Frontend**: React + Vite + Tailwind CSS (deployed on Vercel)
-- **Backend**: Node.js + Express + Socket.io (deployed on Render)
-- **Database**: SQLite via sql.js (WebAssembly)
+- **Frontend** → React + Vite on Vercel (uses Vercel rewrites to proxy `/api/*` to backend)
+- **Backend** → Node.js + Express in Docker on Render (includes Python/Sherlock)
+- **Database** → SQLite via sql.js (WebAssembly)
 
 ## Notes
 
-- Render free tier: App sleeps after 15 minutes of inactivity (cold start takes ~30-50 seconds)
-- Vercel: No cold starts, instant deployment
-- API keys are optional — app works without them but with limited results
+- Render free tier sleeps after 15 min inactivity (cold start ~30-50s)
+- Username search uses HTTP-based fallback (checks 25 platforms directly)
+- For full Sherlock integration, install Python + sherlock-project in the Dockerfile
