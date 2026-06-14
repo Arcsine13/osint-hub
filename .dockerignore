@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+frontend
+.git
+.gitignore
+README.md
+DEPLOYMENT_STATUS.md
+DEPLOYMENT_GUIDE.md
+LICENSE
+.env
+.env.local
+*.db

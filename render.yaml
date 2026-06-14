@@ -1,15 +1,13 @@
 services:
   - type: web
     name: sherlock-osint-backend
-    runtime: node
-    region: oregon
-    plan: free
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && npm start
+    runtime: image
+    image:
+      url: Dockerfile
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 3001
       - key: DB_PATH
-        value: ./data/osint-hub.db
+        value: ./backend/data/osint-hub.db
