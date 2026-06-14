@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
-
-const SOCKET_URL = import.meta.env.VITE_API_URL || window.location.origin;
+import { SOCKET_URL } from '../utils/config';
 
 export function useSocket() {
   const [connected, setConnected] = useState(false);
@@ -9,7 +8,7 @@ export function useSocket() {
 
   useEffect(() => {
     const socket = io(SOCKET_URL, {
-      path: SOCKET_URL === window.location.origin ? '/socket.io' : '/socket.io',
+      path: '/socket.io',
       transports: ['websocket', 'polling'],
     });
 

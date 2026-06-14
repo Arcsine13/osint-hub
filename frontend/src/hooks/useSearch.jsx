@@ -1,10 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
-const API_BASE = import.meta.env.VITE_API_URL 
-  ? import.meta.env.VITE_API_URL + '/api'
-  : '/api';
+import { API_URL } from '../utils/config';
 
 export function useSearch(socket) {
   const [searchResults, setSearchResults] = useState(null);
@@ -54,16 +51,16 @@ export function useSearch(socket) {
       
       switch (type) {
         case 'username':
-          response = await axios.post(`${API_BASE}/search/username`, { username: query });
+          response = await axios.post(API_URL + '/search/username', { username: query });
           break;
         case 'email':
-          response = await axios.post(`${API_BASE}/search/email`, { email: query });
+          response = await axios.post(API_URL + '/search/email', { email: query });
           break;
         case 'phone':
-          response = await axios.post(`${API_BASE}/search/phone`, { phone: query });
+          response = await axios.post(API_URL + '/search/phone', { phone: query });
           break;
         case 'image':
-          response = await axios.post(`${API_BASE}/search/image`, { imageUrl: query });
+          response = await axios.post(API_URL + '/search/image', { imageUrl: query });
           break;
         default:
           throw new Error('Invalid search type');
@@ -95,12 +92,12 @@ export function useSearch(socket) {
   }, []);
 
   const pollSearchStatus = async (searchId) => {
-    const maxAttempts = 60; // 5 minutes with 5s intervals
+    const maxAttempts = 60;
     let attempts = 0;
 
     const poll = async () => {
       try {
-        const response = await axios.get(`${API_BASE}/search/status/${searchId}`);
+        const response = await axios.get(API_URL + '/search/status/' + searchId);
         const { status, results_count, searched_platforms, total_platforms } = response.data;
 
         setSearchProgress({
@@ -111,8 +108,7 @@ export function useSearch(socket) {
         });
 
         if (status === 'completed') {
-          // Fetch final results
-          const resultsResponse = await axios.get(`${API_BASE}/results/${searchId}`);
+          const resultsResponse = await axios.get(API_URL + '/results/' + searchId);
           setSearchResults(resultsResponse.data.results);
           setIsSearching(false);
           toast.success(`Search complete! Found ${results_count} results`);
