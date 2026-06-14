@@ -80,6 +80,16 @@ async function searchUsername(username, searchId, io) {
       io.to(`search-${searchId}`).emit('search-complete', { searchId, results: processedResults });
     }
     
+    // Save results to database
+    const { getDatabase: getDb2, run: run2 } = require('../utils/database');
+    await getDb2();
+    for (const r of processedResults) {
+      run2(
+        'INSERT INTO results (search_id, platform, username, url, status, metadata) VALUES (?, ?, ?, ?, ?, ?)',
+        [searchId, r.platform, r.username, r.url, r.status, JSON.stringify(r.metadata || {})]
+      );
+    }
+    
     await updateSearchStatus(searchId, 'completed', io, processedResults.length);
     fs.rmSync(tempDir, { recursive: true, force: true });
     return processedResults;
@@ -97,6 +107,9 @@ async function searchUsername(username, searchId, io) {
 // Fallback: check common platforms by HTTP status
 async function fallbackSearch(username, searchId, io) {
   const axios = require('axios');
+  const { getDatabase, run } = require('../utils/database');
+  await getDatabase();
+  
   const results = [];
   
   const platforms = [
@@ -172,6 +185,14 @@ async function fallbackSearch(username, searchId, io) {
 
   if (io) {
     io.to(`search-${searchId}`).emit('search-complete', { searchId, results });
+  }
+
+  // Save results to database
+  for (const r of results) {
+    run(
+      'INSERT INTO results (search_id, platform, username, url, status, metadata) VALUES (?, ?, ?, ?, ?, ?)',
+      [searchId, r.platform, r.username, r.url, r.status, JSON.stringify(r.metadata || {})]
+    );
   }
 
   return results;
