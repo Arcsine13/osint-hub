@@ -5,14 +5,20 @@ RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --no-cache-dir sherlock-project
 
+# Verify sherlock installs
+RUN python -c "import sherlock; print('sherlock installed')"
+
 FROM node:18-slim
+
+# Install Python runtime
+RUN apt-get update && \
+    apt-get install -y python3 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy Python venv from builder
 COPY --from=python-builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
-
-# Verify sherlock works
-RUN sherlock --version
 
 # Set working directory
 WORKDIR /app

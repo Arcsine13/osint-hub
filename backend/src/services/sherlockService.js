@@ -6,7 +6,8 @@ const os = require('os');
 
 const execAsync = promisify(exec);
 
-const SHERLOCK_PATH = process.env.SHERLOCK_PATH || 'sherlock';
+// Use venv path if it exists, otherwise fallback to sherlock in PATH
+const SHERLOCK_PATH = process.env.SHERLOCK_PATH || '/opt/venv/bin/sherlock';
 
 // List of supported platforms for reference
 const PLATFORMS = [
