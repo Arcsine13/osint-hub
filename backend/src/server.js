@@ -17,7 +17,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: process.env.FRONTEND_URL 
+      ? process.env.FRONTEND_URL.split(',') 
+      : ['http://localhost:5173', 'https://osint-hub-ten.vercel.app'],
     methods: ['GET', 'POST']
   }
 });
@@ -32,7 +34,9 @@ getDatabase().then(() => {
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: process.env.FRONTEND_URL 
+    ? process.env.FRONTEND_URL.split(',') 
+    : ['http://localhost:5173', 'https://osint-hub-ten.vercel.app'],
   credentials: true
 }));
 app.use(morgan('combined'));
