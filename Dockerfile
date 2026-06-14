@@ -5,8 +5,8 @@ RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --no-cache-dir sherlock-project
 
-# Verify sherlock installs
-RUN python -c "import sherlock; print('sherlock installed')"
+# Verify sherlock binary exists
+RUN ls -la /opt/venv/bin/sherlock*
 
 FROM node:18-slim
 
