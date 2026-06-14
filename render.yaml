@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: sherlock-osint-backend
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: DB_PATH
+        value: ./data/osint-hub.db

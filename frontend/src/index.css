@@ -1,0 +1,375 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-blue: #00D4FF;
+  --neon-purple: #9D00FF;
+  --neon-green: #39FF14;
+  --neon-pink: #FF0080;
+  --cyber-dark: #0a0a0f;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--neon-blue) var(--cyber-dark);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--cyber-dark);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--neon-blue);
+  border-radius: 4px;
+}
+
+body {
+  background-color: var(--cyber-dark);
+  font-family: 'JetBrains Mono', monospace;
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+/* Neon text glow effect */
+.neon-text {
+  text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue);
+}
+
+.neon-text-purple {
+  text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple), 0 0 40px var(--neon-purple);
+}
+
+.neon-text-green {
+  text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green), 0 0 40px var(--neon-green);
+}
+
+/* Cyber card styles */
+.cyber-card {
+  background: linear-gradient(135deg, rgba(18, 18, 26, 0.9) 0%, rgba(26, 26, 37, 0.9) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+}
+
+.cyber-card:hover {
+  border-color: rgba(0, 212, 255, 0.5);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+}
+
+/* Scan line animation */
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+  animation: scan 3s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Grid background pattern */
+.grid-bg {
+  background-image: 
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Button styles */
+.cyber-button {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(157, 0, 255, 0.2) 100%);
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 12px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.cyber-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.cyber-button:hover::before {
+  left: 100%;
+}
+
+.cyber-button:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.4) 0%, rgba(157, 0, 255, 0.4) 100%);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+}
+
+.cyber-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cyber-button:disabled::before {
+  display: none;
+}
+
+/* Input styles */
+.cyber-input {
+  background: rgba(10, 10, 15, 0.8);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: #e0e0e0;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.cyber-input:focus {
+  outline: none;
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.cyber-input::placeholder {
+  color: #666;
+}
+
+/* Tab styles */
+.cyber-tab {
+  background: rgba(18, 18, 26, 0.5);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  color: #888;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.cyber-tab:hover {
+  color: var(--neon-blue);
+  border-color: rgba(0, 212, 255, 0.5);
+}
+
+.cyber-tab.active {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(157, 0, 255, 0.2) 100%);
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+}
+
+.cyber-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--neon-blue);
+  box-shadow: 0 0 10px var(--neon-blue);
+}
+
+/* Progress bar */
+.progress-bar {
+  background: rgba(0, 212, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Loading spinner */
+.cyber-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 212, 255, 0.1);
+  border-top-color: var(--neon-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Hexagon pattern */
+.hex-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2300d4ff' fill-opacity='0.03'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Glitch effect */
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch-1 2s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  color: var(--neon-blue);
+}
+
+.glitch::after {
+  animation: glitch-2 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+  color: var(--neon-purple);
+}
+
+@keyframes glitch-1 {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+  0% { transform: translate(0); }
+  20% { transform: translate(2px, -2px); }
+  40% { transform: translate(2px, 2px); }
+  60% { transform: translate(-2px, -2px); }
+  80% { transform: translate(-2px, 2px); }
+  100% { transform: translate(0); }
+}
+
+/* Tooltip */
+.cyber-tooltip {
+  position: relative;
+}
+
+.cyber-tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cyber-tooltip:hover::after {
+  opacity: 1;
+}
+
+/* Status indicators */
+.status-online {
+  width: 8px;
+  height: 8px;
+  background: var(--neon-green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--neon-green);
+  animation: pulse 2s infinite;
+}
+
+.status-offline {
+  width: 8px;
+  height: 8px;
+  background: #ff4444;
+  border-radius: 50%;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* Card hover effect */
+.result-card {
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.result-card:hover {
+  transform: translateY(-5px) rotateX(2deg);
+}
+
+/* Neon border animation */
+.neon-border {
+  position: relative;
+}
+
+.neon-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-green), var(--neon-blue));
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: border-glow 3s ease infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.neon-border:hover::before {
+  opacity: 1;
+}
+
+@keyframes border-glow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
